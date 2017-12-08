@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin>
+    <name>maven-reactive-app Maven Plugin</name>
+    <description></description>
+    <groupId>com.lightbend.rp</groupId>
+    <artifactId>maven-reactive-app</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <goalPrefix>reactive-app</goalPrefix>
+    <isolatedRealm>false</isolatedRealm>
+    <inheritedByDefault>true</inheritedByDefault>
+    <mojos>
+        <mojo>
+            <goal>docker</goal>
+            <description>Builds docker image</description>
+            <requiresDirectInvocation>false</requiresDirectInvocation>
+            <requiresProject>true</requiresProject>
+            <requiresReports>false</requiresReports>
+            <aggregator>false</aggregator>
+            <requiresOnline>false</requiresOnline>
+            <inheritedByDefault>true</inheritedByDefault>
+            <phase>install</phase>
+            <implementation>com.lightbend.rp.ReactiveAppMojo</implementation>
+            <language>java</language>
+            <instantiationStrategy>per-lookup</instantiationStrategy>
+            <executionStrategy>once-per-session</executionStrategy>
+            <threadSafe>false</threadSafe>
+            <!--
+            <parameters>
+                <parameter>
+                    <name>outputDirectory</name>
+                    <type>java.io.File</type>
+                    <required>true</required>
+                    <editable>true</editable>
+                    <description>Location of the file.</description>
+                </parameter>
+            </parameters>
+            <configuration>
+                <outputDirectory implementation="java.io.File" default-value="${project.build.directory}">${outputDir}</outputDirectory>
+            </configuration>
+            -->
+        </mojo>
+    </mojos>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <type>jar</type>
+            <version>2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.twdata.maven</groupId>
+            <artifactId>mojo-executor</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+    </dependencies>
+</plugin>
