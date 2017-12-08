@@ -20,19 +20,22 @@ crossPaths := false
 lazy val publishLocalMaven = taskKey[Unit]("Publish local maven plugin.")
 publishLocalMaven := {
   publishLocal.value
-  publishLocalConfiguration.value.artifacts.foreach( { case (artifact, file) =>
-    if (file.toString.endsWith(version.value + ".jar")) {
+
+  val artifacts = publishLocalConfiguration.value.artifacts.map(_._2.toString)
+  val jarFile = artifacts.find(_.endsWith(version.value + ".jar"))
+  val pomFile = artifacts.find(_.endsWith(version.value + ".pom"))
+
+  if(jarFile.isDefined && pomFile.isDefined) {
       Process(Seq(
         "mvn", "install:install-file",
-        "-Dfile="+file.toString,
+        "-Dfile="+jarFile.get,
+        "-DpomFile="+pomFile.get,
         "-DgroupId="+organization.value,
         "-DartifactId="+name.value,
         "-Dversion="+version.value,
         "-Dpackaging=jar",
-        "-DgeneratePom=true",
         "-DcreateChecksum=true"))!
-    }
-  })
+  }
 }
 
 homepage := Some(url("https://www.lightbend.com/"))
