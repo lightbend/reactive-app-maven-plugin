@@ -25,20 +25,32 @@
             <instantiationStrategy>per-lookup</instantiationStrategy>
             <executionStrategy>once-per-session</executionStrategy>
             <threadSafe>false</threadSafe>
-            <!--
             <parameters>
                 <parameter>
-                    <name>outputDirectory</name>
-                    <type>java.io.File</type>
-                    <required>true</required>
-                    <editable>true</editable>
-                    <description>Location of the file.</description>
+                    <name>mavenProject</name>
+                    <type>org.apache.maven.project.MavenProject</type>
+                    <required>false</required>
+                    <editable>false</editable>
+                    <description>The current project being built.</description>
+                </parameter>
+                <parameter>
+                    <name>mavenSession</name>
+                    <type>org.apache.maven.execution.MavenSession</type>
+                    <required>false</required>
+                    <editable>false</editable>
+                    <description>The current Maven session.</description>
                 </parameter>
             </parameters>
             <configuration>
-                <outputDirectory implementation="java.io.File" default-value="${project.build.directory}">${outputDir}</outputDirectory>
+                <mavenProject implementation="org.apache.maven.project.MavenProject" default-value="${project}"/>
+                <mavenSession implementation="org.apache.maven.execution.MavenSession" default-value="${session}"/>
             </configuration>
-            -->
+            <requirements>
+                <requirement>
+                    <role>org.apache.maven.plugin.BuildPluginManager</role>
+                    <field-name>pluginManager</field-name>
+                </requirement>
+            </requirements>
         </mojo>
     </mojos>
     <dependencies>

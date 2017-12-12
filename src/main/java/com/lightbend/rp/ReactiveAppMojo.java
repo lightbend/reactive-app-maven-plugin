@@ -5,6 +5,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Component;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.BuildPluginManager;
 import org.apache.maven.project.MavenProject;
@@ -12,10 +13,10 @@ import static org.twdata.maven.mojoexecutor.MojoExecutor.*;
 
 @Mojo( name = "docker", defaultPhase = LifecyclePhase.INSTALL )
 public class ReactiveAppMojo extends AbstractMojo {
-    @Component
+    @Parameter( defaultValue = "${project}", readonly = true )
     private MavenProject mavenProject;
 
-    @Component
+    @Parameter( defaultValue = "${session}", readonly = true )
     private MavenSession mavenSession;
 
     @Component
