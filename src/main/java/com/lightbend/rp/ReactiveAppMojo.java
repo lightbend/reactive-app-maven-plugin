@@ -25,7 +25,22 @@ public class ReactiveAppMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException {
         executeMojo(
                 plugin(groupId("io.fabric8"), artifactId("docker-maven-plugin"), version("0.23.0")),
-                goal("build"), configuration(),
+                goal("build"),
+                configuration(
+                        element("images",
+                                element("image",
+                                        element("name", "reactive-maven-hello:${project.version}"),
+                                        element("alias", "rp-hello"),
+                                        element("build",
+                                                element("from", "openjdk:latest"),
+                                                element("assembly",
+                                                        element("descriptorRef", "artifact")
+                                                        ),
+                                                element("cmd", "java -jar maven/${project.name}-${project.version}.jar")
+                                        )
+                                )
+                        )
+                ),
                 executionEnvironment(mavenProject, mavenSession, pluginManager)
         );
     }

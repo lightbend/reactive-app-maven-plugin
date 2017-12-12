@@ -40,10 +40,10 @@
                 <version>0.1.0-SNAPSHOT</version>
                 <executions>
                     <execution>
-                        <id>default-clean</id>
-                        <phase>clean</phase>
+                        <id>build-docker</id>
+                        <phase>install</phase>
                         <goals>
-                            <goal>hello</goal>
+                            <goal>docker</goal>
                         </goals>
                     </execution>
                 </executions>
