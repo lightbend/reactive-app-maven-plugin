@@ -16,45 +16,33 @@ publishMavenStyle := true
 autoScalaLibrary := false
 crossPaths := false
 
-// This registers our plugin in with local maven repository
-lazy val publishLocalMaven = taskKey[Unit]("Publish local maven plugin.")
-publishLocalMaven := {
-  publishLocal.value
-
-  val artifacts = publishLocalConfiguration.value.artifacts.map(_._2.toString)
-  val jarFile = artifacts.find(_.endsWith(version.value + ".jar"))
-  val pomFile = artifacts.find(_.endsWith(version.value + ".pom"))
-
-  if(jarFile.isDefined && pomFile.isDefined) {
-      Process(Seq(
-        "mvn", "install:install-file",
-        "-Dfile="+jarFile.get,
-        "-DpomFile="+pomFile.get,
-        "-DgroupId="+organization.value,
-        "-DartifactId="+name.value,
-        "-Dversion="+version.value,
-        "-Dpackaging=jar",
-        "-DcreateChecksum=true"))!
-  }
-}
-
 // This runs integration tests
 lazy val runIntegrationTests = taskKey[Unit]("Run integration tests.")
 runIntegrationTests := {
-  publishLocalMaven.value
+  publishM2.value
 
   val log = streams.value.log
   val base = baseDirectory.value
 
   def tests(base: File) = ((base / "src" / "it") * AllPassFilter).filter(_.isDirectory)
 
-  tests(base).get.foreach( testDir => {
+  def exec(cmd: Seq[String], cwd: File): Boolean = {
+    Process(cmd, cwd = cwd) ! log match {
+      case 0 => true
+      case _ => false
+    }
+  }
+
+  tests(base).get.foreach(testDir => {
     val testName = testDir.relativeTo(base).get.toString
     log.info(s"Running test in $testName")
 
-    (Process(Seq("mvn", "reactive-app:docker"), cwd = testDir) ! log) match {
-      case 0 => log.success(s"Test $testName passed")
-      case _ => log.error(s"Test $testName failed")
+    if ( exec(Seq("mvn", "package"), testDir)
+      && exec(Seq("mvn", "reactive-app:docker"), testDir)) {
+      log.success(s"Test $testName passed")
+    } else {
+      log.error(s"Test $testName failed")
+      throw new TestsFailedException
     }
   })
 }
