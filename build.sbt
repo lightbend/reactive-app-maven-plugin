@@ -38,6 +38,27 @@ publishLocalMaven := {
   }
 }
 
+// This runs integration tests
+lazy val runIntegrationTests = taskKey[Unit]("Run integration tests.")
+runIntegrationTests := {
+  publishLocalMaven.value
+
+  val log = streams.value.log
+  val base = baseDirectory.value
+
+  def tests(base: File) = ((base / "src" / "it") * AllPassFilter).filter(_.isDirectory)
+
+  tests(base).get.foreach( testDir => {
+    val testName = testDir.relativeTo(base).get.toString
+    log.info(s"Running test in $testName")
+
+    (Process(Seq("mvn", "reactive-app:docker"), cwd = testDir) ! log) match {
+      case 0 => log.success(s"Test $testName passed")
+      case _ => log.error(s"Test $testName failed")
+    }
+  })
+}
+
 homepage := Some(url("https://www.lightbend.com/"))
 developers := List(
   Developer("lightbend", "Lightbend Contributors", "", url("https://github.com/lightbend/sbt-reactive-app"))
