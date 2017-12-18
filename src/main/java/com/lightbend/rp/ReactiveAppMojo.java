@@ -23,13 +23,16 @@ public class ReactiveAppMojo extends AbstractMojo {
     private BuildPluginManager pluginManager;
 
     public void execute() throws MojoExecutionException {
+        AppType type = AppTypeDetector.detect(mavenProject);
+        getLog().info("App type: " + type.toString());
+
         executeMojo(
                 plugin(groupId("io.fabric8"), artifactId("docker-maven-plugin"), version("0.23.0")),
                 goal("build"),
                 configuration(
                         element("images",
                                 element("image",
-                                        element("name", "reactive-maven-hello:${project.version}"),
+                                        element("name", "${project.name}:${project.version}"),
                                         element("alias", "rp-hello"),
                                         element("build",
                                                 element("from", "openjdk:latest"),
