@@ -44,6 +44,12 @@
             <configuration>
                 <mavenProject implementation="org.apache.maven.project.MavenProject" default-value="${project}"/>
                 <mavenSession implementation="org.apache.maven.execution.MavenSession" default-value="${session}"/>
+
+                <appName implementation="java.lang.String"/>
+                <appType implementation="com.lightbend.rp.AppType"/>
+                <cpu implementation="java.lang.Double"/>
+                <memory implementation="java.lang.Integer"/>
+                <diskSpace implementation="java.lang.Integer"/>
             </configuration>
             <requirements>
                 <requirement>

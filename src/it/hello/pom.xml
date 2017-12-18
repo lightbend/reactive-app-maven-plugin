@@ -38,6 +38,11 @@
                 <groupId>com.lightbend.rp</groupId>
                 <artifactId>maven-reactive-app</artifactId>
                 <version>0.1.0-SNAPSHOT</version>
+                <configuration>
+                    <appName>hello-reactive</appName>
+                    <appType>basic</appType>
+                    <cpu>1.0</cpu>
+                </configuration>
                 <executions>
                     <execution>
                         <id>build-docker</id>
