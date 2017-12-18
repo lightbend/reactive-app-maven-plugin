@@ -27,10 +27,7 @@ runIntegrationTests := {
   def tests(base: File) = ((base / "src" / "it") * AllPassFilter).filter(_.isDirectory)
 
   def exec(cmd: Seq[String], cwd: File): Boolean = {
-    Process(cmd, cwd = cwd) ! log match {
-      case 0 => true
-      case _ => false
-    }
+    Process(cmd, cwd = cwd) ! log == 0
   }
 
   tests(base).get.foreach(testDir => {
