@@ -28,7 +28,7 @@ public class ReactiveAppMojo extends AbstractMojo {
 
     Plugin getThisPlugin() {
         for(Plugin plugin : mavenProject.getBuildPlugins()) {
-            if(plugin.getArtifactId().equals("maven-reactive-app")) {
+            if(plugin.getArtifactId().equals("reactive-app-maven-plugin")) {
                 return plugin;
             }
         }

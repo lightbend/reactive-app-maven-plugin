@@ -54,7 +54,7 @@
             </plugin>
             <plugin>
                 <groupId>com.lightbend.rp</groupId>
-                <artifactId>maven-reactive-app</artifactId>
+                <artifactId>reactive-app-maven-plugin</artifactId>
                 <version>0.1.0-SNAPSHOT</version>
                 <executions>
                     <execution>

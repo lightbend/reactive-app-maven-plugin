@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <plugin>
-    <name>maven-reactive-app Maven Plugin</name>
+    <name>Reactive App Maven Plugin</name>
     <description></description>
     <groupId>com.lightbend.rp</groupId>
-    <artifactId>maven-reactive-app</artifactId>
+    <artifactId>reactive-app-maven-plugin</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <goalPrefix>reactive-app</goalPrefix>
     <isolatedRealm>false</isolatedRealm>
@@ -44,12 +44,6 @@
             <configuration>
                 <mavenProject implementation="org.apache.maven.project.MavenProject" default-value="${project}"/>
                 <mavenSession implementation="org.apache.maven.execution.MavenSession" default-value="${session}"/>
-
-                <appName implementation="java.lang.String"/>
-                <appType implementation="com.lightbend.rp.AppType"/>
-                <cpu implementation="java.lang.Double"/>
-                <memory implementation="java.lang.Integer"/>
-                <diskSpace implementation="java.lang.Integer"/>
             </configuration>
             <requirements>
                 <requirement>

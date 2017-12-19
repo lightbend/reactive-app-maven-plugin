@@ -1,6 +1,6 @@
 import scala.sys.process._
 
-name := "maven-reactive-app"
+name := "reactive-app-maven-plugin"
 organization := "com.lightbend.rp"
 organizationName := "Lightbend, Inc."
 startYear := Some(2017)
@@ -46,6 +46,6 @@ runIntegrationTests := {
 
 homepage := Some(url("https://www.lightbend.com/"))
 developers := List(
-  Developer("lightbend", "Lightbend Contributors", "", url("https://github.com/lightbend/sbt-reactive-app"))
+  Developer("lightbend", "Lightbend Contributors", "", url("https://github.com/lightbend/reactive-app-maven-plugin"))
 )
 
