@@ -2,7 +2,6 @@ package com.lightbend.rp;
 
 import org.apache.maven.model.Plugin;
 import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecution;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -43,10 +42,11 @@ public class ReactiveAppMojo extends AbstractMojo {
         log.info("App type: " + type.toString());
 
         Xpp3Dom dom = (Xpp3Dom)getThisPlugin().getConfiguration();
-        if(dom != null)
-            log.info("Config dom: " + dom.toString());
+        Settings settings = new Settings(dom);
+        if(settings.cpu != null)
+            log.info("cpu: " + settings.cpu);
         else
-            log.info("No config found");
+            log.info("Cpu not found");
 
         executeMojo(
                 plugin(groupId("io.fabric8"), artifactId("docker-maven-plugin"), version("0.23.0")),

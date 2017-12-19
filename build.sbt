@@ -35,7 +35,7 @@ runIntegrationTests := {
     log.info(s"Running test in $testName")
 
     if ( exec(Seq("mvn", "package"), testDir)
-      && exec(Seq("mvn", "reactive-app:docker"), testDir)) {
+      && exec(Seq("mvn", "-e", "reactive-app:docker"), testDir)) {
       log.success(s"Test $testName passed")
     } else {
       log.error(s"Test $testName failed")
