@@ -15,8 +15,8 @@ import org.codehaus.plexus.util.xml.Xpp3Dom;
 
 import static org.twdata.maven.mojoexecutor.MojoExecutor.*;
 
-@Mojo( name = "docker", defaultPhase = LifecyclePhase.INSTALL )
-public class ReactiveAppMojo extends AbstractMojo {
+@Mojo( name = "build", defaultPhase = LifecyclePhase.INSTALL )
+public class BuildMojo extends AbstractMojo {
     @Parameter( defaultValue = "${project}", readonly = true )
     private MavenProject mavenProject;
 
@@ -38,20 +38,14 @@ public class ReactiveAppMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException {
         Log log = getLog();
 
+
+        Xpp3Dom pluginConf = (Xpp3Dom)getThisPlugin().getConfiguration();
+        Settings settings = new Settings(pluginConf);
         AppType type = AppTypeDetector.detect(mavenProject);
+        settings.appType = type;
         log.info("App type: " + type.toString());
 
-        Xpp3Dom dom = (Xpp3Dom)getThisPlugin().getConfiguration();
-        Settings settings = new Settings(dom);
-        if(settings.cpu != null)
-            log.info("cpu: " + settings.cpu);
-        else
-            log.info("Cpu not found");
-
-        executeMojo(
-                plugin(groupId("io.fabric8"), artifactId("docker-maven-plugin"), version("0.23.0")),
-                goal("build"),
-                configuration(
+        Xpp3Dom conf = configuration(
                         element("images",
                                 element("image",
                                         element("name", "${project.name}:${project.version}"),
@@ -65,7 +59,14 @@ public class ReactiveAppMojo extends AbstractMojo {
                                         )
                                 )
                         )
-                ),
+                );
+
+        settings.writeLabels(conf);
+
+        executeMojo(
+                plugin(groupId("io.fabric8"), artifactId("docker-maven-plugin"), version("0.23.0")),
+                goal("build"),
+                conf,
                 executionEnvironment(mavenProject, mavenSession, pluginManager)
         );
     }

@@ -39,4 +39,26 @@ public class Settings {
             }
         }
     }
+
+    private void addLabel(Xpp3Dom labels, String name, String value) {
+        Xpp3Dom label = new Xpp3Dom("com.lightbend.rp." + name);
+        label.setValue("\"" + value + "\"");
+        labels.addChild(label);
+    }
+
+    void writeLabels(Xpp3Dom dockerConfig) {
+        Xpp3Dom build = dockerConfig.getChild("images").getChild("image").getChild("build");
+        Xpp3Dom labels = new Xpp3Dom("labels");
+        build.addChild(labels);
+
+        addLabel(labels, "app-name", appName);
+        addLabel(labels, "app-type", appType.toString().toLowerCase());
+
+        if(cpu != null)
+            addLabel(labels, "cpu", cpu.toString());
+        if(diskSpace != null)
+            addLabel(labels, "disk-space", diskSpace.toString());
+        if(memory != null)
+            addLabel(labels, "memory", memory.toString());
+    }
 }

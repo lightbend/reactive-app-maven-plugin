@@ -11,7 +11,7 @@
     <inheritedByDefault>true</inheritedByDefault>
     <mojos>
         <mojo>
-            <goal>docker</goal>
+            <goal>build</goal>
             <description>Builds docker image</description>
             <requiresDirectInvocation>false</requiresDirectInvocation>
             <requiresProject>true</requiresProject>
@@ -20,7 +20,49 @@
             <requiresOnline>false</requiresOnline>
             <inheritedByDefault>true</inheritedByDefault>
             <phase>install</phase>
-            <implementation>com.lightbend.rp.ReactiveAppMojo</implementation>
+            <implementation>com.lightbend.rp.BuildMojo</implementation>
+            <language>java</language>
+            <instantiationStrategy>per-lookup</instantiationStrategy>
+            <executionStrategy>once-per-session</executionStrategy>
+            <threadSafe>false</threadSafe>
+            <parameters>
+                <parameter>
+                    <name>mavenProject</name>
+                    <type>org.apache.maven.project.MavenProject</type>
+                    <required>false</required>
+                    <editable>false</editable>
+                    <description>The current project being built.</description>
+                </parameter>
+                <parameter>
+                    <name>mavenSession</name>
+                    <type>org.apache.maven.execution.MavenSession</type>
+                    <required>false</required>
+                    <editable>false</editable>
+                    <description>The current Maven session.</description>
+                </parameter>
+            </parameters>
+            <configuration>
+                <mavenProject implementation="org.apache.maven.project.MavenProject" default-value="${project}"/>
+                <mavenSession implementation="org.apache.maven.execution.MavenSession" default-value="${session}"/>
+            </configuration>
+            <requirements>
+                <requirement>
+                    <role>org.apache.maven.plugin.BuildPluginManager</role>
+                    <field-name>pluginManager</field-name>
+                </requirement>
+            </requirements>
+        </mojo>
+        <mojo>
+            <goal>push</goal>
+            <description>Builds docker image</description>
+            <requiresDirectInvocation>false</requiresDirectInvocation>
+            <requiresProject>true</requiresProject>
+            <requiresReports>false</requiresReports>
+            <aggregator>false</aggregator>
+            <requiresOnline>false</requiresOnline>
+            <inheritedByDefault>true</inheritedByDefault>
+            <phase>deploy</phase>
+            <implementation>com.lightbend.rp.PushMojo</implementation>
             <language>java</language>
             <instantiationStrategy>per-lookup</instantiationStrategy>
             <executionStrategy>once-per-session</executionStrategy>
