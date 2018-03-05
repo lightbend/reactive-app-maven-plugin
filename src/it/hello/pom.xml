@@ -8,6 +8,10 @@
     <name>hello</name>
     <url>http://maven.apache.org</url>
 
+    <properties>
+        <mainClass>com.lightbend.app.App</mainClass>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -29,7 +33,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.lightbend.app.App</mainClass>
+                            <mainClass>${mainClass}</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

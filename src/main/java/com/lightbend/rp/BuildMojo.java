@@ -51,11 +51,17 @@ public class BuildMojo extends AbstractMojo {
                                         element("name", "${project.name}:${project.version}"),
                                         element("alias", "rp-${project.name}"),
                                         element("build",
-                                                element("from", "openjdk:latest"),
+                                                element("from", "fabric8/java-alpine-openjdk8-jre"),
                                                 element("assembly",
-                                                        element("descriptorRef", "artifact")
+                                                        element("targetDir", "/deployments"),
+                                                        element("descriptorRef", "artifact-with-dependencies")
                                                         ),
-                                                element("cmd", "java -jar maven/${project.name}-${project.version}.jar")
+                                                element("env",
+                                                        element("AB_OFF", "1"),
+                                                        element("JAVA_MAIN_CLASS", "${mainClass}"),
+                                                        element("JAVA_APP_JAR", "${project.name}-${project.version}.jar")
+                                                ),
+                                                element("cmd", "deployments/run-java.sh")
                                         )
                                 )
                         )

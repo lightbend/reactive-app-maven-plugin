@@ -6,6 +6,10 @@
     <artifactId>akka-quickstart</artifactId>
     <version>1.0</version>
 
+    <properties>
+        <mainClass>com.lightbend.akka.sample.AkkaQuickstart</mainClass>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
@@ -25,7 +29,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.lightbend.akka.sample.AkkaQuickstart</mainClass>
+                            <mainClass>${mainClass}</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -48,9 +52,28 @@
                     <arguments>
                         <argument>-classpath</argument>
                         <classpath />
-                        <argument>com.lightbend.akka.sample.AkkaQuickstart</argument>
+                        <argument>${mainClass}</argument>
                     </arguments>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.10</version>
+                <executions>
+                    <execution>
+                        <id>attach-deps</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build-classpath</goal>
+                        </goals>
+                        <configuration>
+                            <prefix>.</prefix>
+                            <includeScope>runtime</includeScope>
+                            <outputFile>${project.build.directory}/classpath</outputFile>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>com.lightbend.rp</groupId>
@@ -61,7 +84,7 @@
                         <id>build-docker</id>
                         <phase>install</phase>
                         <goals>
-                            <goal>docker</goal>
+                            <goal>build</goal>
                         </goals>
                     </execution>
                 </executions>
