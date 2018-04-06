@@ -43,6 +43,7 @@ public class BuildMojo extends AbstractMojo {
         Settings settings = new Settings(pluginConf);
         AppType type = AppTypeDetector.detect(mavenProject);
         settings.appType = type;
+        settings.appVersion = mavenProject.getVersion();
         log.info("App type: " + type.toString());
 
         Xpp3Dom conf = configuration(

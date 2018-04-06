@@ -5,6 +5,7 @@ import org.codehaus.plexus.util.xml.Xpp3Dom;
 public class Settings {
 
     public String appName;
+    public String appVersion;
     public AppType appType;
     public Long diskSpace;
     public Long memory;
@@ -52,6 +53,7 @@ public class Settings {
         build.addChild(labels);
 
         addLabel(labels, "app-name", appName);
+        addLabel(labels, "app-version", appVersion);
         addLabel(labels, "app-type", appType.toString().toLowerCase());
 
         if(cpu != null)
