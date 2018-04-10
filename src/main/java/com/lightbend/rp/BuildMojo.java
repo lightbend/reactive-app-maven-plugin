@@ -3,6 +3,7 @@ package com.lightbend.rp;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -38,13 +39,41 @@ public class BuildMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException {
         Log log = getLog();
 
-
         Xpp3Dom pluginConf = (Xpp3Dom)getThisPlugin().getConfiguration();
+
         Settings settings = new Settings(pluginConf);
+        Labels labels = new Labels();
+
         AppType type = AppTypeDetector.detect(mavenProject);
         settings.appType = type;
-        settings.appVersion = mavenProject.getVersion();
         log.info("App type: " + type.toString());
+        settings.appName = mavenProject.getName();
+        log.info("App name: " + settings.appName);
+        settings.appVersion = mavenProject.getVersion();
+        log.info("App version: " + settings.appVersion);
+
+        ReactiveApp analyser = null;
+        switch(type) {
+            case Basic:
+                analyser = new BasicApp();
+                break;
+            case Akka:
+                analyser = new AkkaApp();
+                break;
+            case Play:
+                analyser = new PlayApp();
+                break;
+            case Lagom:
+                analyser = new LagomApp();
+                break;
+            default:
+                log.error("Unknown app type " + type.toString());
+        }
+
+        if(analyser == null)
+            throw new MojoExecutionException("Unknown app type");
+
+        analyser.apply(mavenProject, settings, labels);
 
         Xpp3Dom conf = configuration(
                         element("images",
@@ -68,7 +97,7 @@ public class BuildMojo extends AbstractMojo {
                         )
                 );
 
-        settings.writeLabels(conf);
+        labels.writeToConf(conf);
 
         executeMojo(
                 plugin(groupId("io.fabric8"), artifactId("docker-maven-plugin"), version("0.23.0")),
