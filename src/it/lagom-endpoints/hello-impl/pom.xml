@@ -48,7 +48,7 @@
                         <id>build-docker</id>
                         <phase>install</phase>
                         <goals>
-                            <goal>docker</goal>
+                            <goal>build</goal>
                         </goals>
                     </execution>
                 </executions> 
