@@ -24,6 +24,7 @@
             <language>java</language>
             <instantiationStrategy>per-lookup</instantiationStrategy>
             <executionStrategy>once-per-session</executionStrategy>
+            <requiresDependencyResolution>compile</requiresDependencyResolution>
             <threadSafe>false</threadSafe>
             <parameters>
                 <parameter>
