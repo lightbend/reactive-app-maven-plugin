@@ -7,5 +7,5 @@ public interface ReactiveApp {
     /**
      * Applies necessary modifications to the given maven project to make it run in reactive ecosystem.
      */
-    void apply(MavenProject project, Settings settings, Labels labels) throws DependencyResolutionRequiredException;
+    void apply(MavenProject project, Settings settings, Labels labels);
 }

@@ -73,11 +73,7 @@ public class BuildMojo extends AbstractMojo {
         if(analyser == null)
             throw new MojoExecutionException("Unknown app type");
 
-        try {
-            analyser.apply(mavenProject, settings, labels);
-        }
-        catch(DependencyResolutionRequiredException e) {
-        }
+        analyser.apply(mavenProject, settings, labels);
 
         Xpp3Dom conf = configuration(
                         element("images",
