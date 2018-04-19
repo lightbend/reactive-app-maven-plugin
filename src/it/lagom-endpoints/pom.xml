@@ -89,21 +89,6 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
-             <dependency>
-                <groupId>com.lightbend.lagom</groupId>
-                <artifactId>lagom-javadsl-server_${scala.binary.version}</artifactId>
-                <version>${lagom.version}</version>
-            </dependency>
-             <dependency>
-                <groupId>com.lightbend.lagom</groupId>
-                <artifactId>lagom-javadsl-api_${scala.binary.version}</artifactId>
-                <version>${lagom.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.lightbend.lagom</groupId>
-                <artifactId>lagom-logback_${scala.binary.version}</artifactId>
-                <version>${lagom.version}</version>
-            </dependency>
             <!-- Service Locator Provider -->
             <dependency>
                 <groupId>${serviceLocator.provider.groupName}</groupId>
