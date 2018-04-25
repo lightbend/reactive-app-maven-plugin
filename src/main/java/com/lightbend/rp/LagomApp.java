@@ -1,28 +1,60 @@
 package com.lightbend.rp;
 
-import org.apache.maven.artifact.Artifact;
-import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.project.MavenProject;
+import org.json.*;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.Type;
 
-//import com.lightbend.rp.sbtreactiveapp.magic.Lagom$;
 
 public class LagomApp implements ReactiveApp {
-    BasicApp basic;
+    private BasicApp basic;
+    private Pattern pathExtractor = Pattern.compile("^\\\\Q(/.*?)\\\\E.*");
 
     public LagomApp(Settings settings, Labels labels, Endpoints endpoints) {
         basic = new BasicApp(settings, labels, endpoints);
     }
 
+    private String decodePathPattern(String pattern) {
+        Matcher m = pathExtractor.matcher(pattern);
+        if(m.matches())
+            return m.group(1);
+        return null;
+    }
+
     private void parseServices(String serviceJson) {
+        Endpoints endpoints = basic.getEndpoints();
+
+        JSONArray obj = new JSONArray(serviceJson);
+        for(int i = 0; i < obj.length(); ++i) {
+            JSONObject o = obj.getJSONObject(i);
+
+            Endpoints.Endpoint e = endpoints.addEndpoint();
+            e.name = o.getString("name");
+            e.protocol = "http";
+
+            JSONArray acls = o.getJSONArray("acls");
+            for(int j = 0; j < acls.length(); ++j) {
+                // TODO(mitkus): this handles GET method, what happens with POST/PUT?
+                JSONObject acl = acls.getJSONObject(j);
+
+                Endpoints.Endpoint.Ingress ing = e.addIngress();
+                ing.type = "http";
+
+                // TODO(mitkus): sbt-reactive-app always puts ports 80, 443; is that correct?
+                ing.ports.add("80");
+                ing.ports.add("443");
+
+                String path = decodePathPattern(acl.getString("pathPattern"));
+                if(path != null)
+                    ing.paths.add(path);
+            }
+        }
     }
 
     @Override
@@ -46,9 +78,7 @@ public class LagomApp implements ReactiveApp {
             Method services = sdObj.getClass().getMethod("services", ClassLoader.class);
 
             String servicesJson = (String)services.invoke(sdObj, ld);
-            System.out.println("Services: " + servicesJson);
             parseServices(servicesJson);
-
         } catch(Exception e) {
             throw new RuntimeException(e.toString());
         }

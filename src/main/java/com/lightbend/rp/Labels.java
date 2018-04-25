@@ -23,7 +23,7 @@ public class Labels {
 
         for(HashMap.Entry<String, String> e: labelMap.entrySet()) {
             Xpp3Dom label = new Xpp3Dom("com.lightbend.rp." + e.getKey());
-            label.setValue(e.getValue());
+            label.setValue("\"" + e.getValue() + "\"");
             labels.addChild(label);
         }
     }
