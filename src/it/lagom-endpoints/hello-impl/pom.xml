@@ -32,6 +32,10 @@
             <artifactId>api-tools_${scala.binary.version}</artifactId>
             <version>${lagom.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.typesafe.play</groupId>
+            <artifactId>play-akka-http-server_${scala.binary.version}</artifactId>
+        </dependency>
         <!-- Service Locator Provider -->
         <dependency>
             <groupId>${serviceLocator.provider.groupName}</groupId>

@@ -9,9 +9,6 @@ import java.util.concurrent.CompletableFuture;
 public class HelloServiceImpl implements HelloService {
     @Override
     public ServiceCall<NotUsed, String> hello(String id) {
-        //return request -> {
-        //    return "Hello, " + id;
-        //};
         return request -> CompletableFuture.completedFuture("hello: " + id);
     }
 }

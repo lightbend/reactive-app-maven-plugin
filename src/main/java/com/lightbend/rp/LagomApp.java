@@ -5,9 +5,15 @@ import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.project.MavenProject;
 
 import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.List;
 import java.util.stream.Stream;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.Type;
+
+//import com.lightbend.rp.sbtreactiveapp.magic.Lagom$;
 
 public class LagomApp implements ReactiveApp {
     BasicApp basic = new BasicApp();
@@ -30,9 +36,10 @@ public class LagomApp implements ReactiveApp {
             ClassLoader ld = new java.net.URLClassLoader(u.toArray(URL[]::new));
             Class sdClass = ld.loadClass("com.lightbend.lagom.internal.api.tools.ServiceDetector$");
             Object sdObj = sdClass.getField("MODULE$").get(null);
+            Method services = sdObj.getClass().getMethod("services", ClassLoader.class);
 
-            // TODO: use java reflection to call sdObj.services(ld) here
-            //System.out.println("Services: " + s);
+            String servicesJson = (String)services.invoke(sdObj, ld);
+            System.out.println("Services: " + servicesJson);
         } catch(Exception e) {
             throw new RuntimeException(e.toString());
         }
