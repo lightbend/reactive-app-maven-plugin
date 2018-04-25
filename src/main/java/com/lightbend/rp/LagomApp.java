@@ -16,11 +16,18 @@ import java.lang.reflect.Type;
 //import com.lightbend.rp.sbtreactiveapp.magic.Lagom$;
 
 public class LagomApp implements ReactiveApp {
-    BasicApp basic = new BasicApp();
+    BasicApp basic;
+
+    public LagomApp(Settings settings, Labels labels, Endpoints endpoints) {
+        basic = new BasicApp(settings, labels, endpoints);
+    }
+
+    private void parseServices(String serviceJson) {
+    }
 
     @Override
-    public void apply(MavenProject project, Settings settings, Labels labels) {
-        basic.apply(project, settings, labels);
+    public void apply(MavenProject project) {
+        basic.apply(project);
 
         try {
             List<String> l = project.getCompileClasspathElements();
@@ -40,6 +47,8 @@ public class LagomApp implements ReactiveApp {
 
             String servicesJson = (String)services.invoke(sdObj, ld);
             System.out.println("Services: " + servicesJson);
+            parseServices(servicesJson);
+
         } catch(Exception e) {
             throw new RuntimeException(e.toString());
         }

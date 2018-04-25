@@ -3,9 +3,30 @@ package com.lightbend.rp;
 import org.apache.maven.project.MavenProject;
 
 public class BasicApp implements ReactiveApp {
+    private Settings settings;
+    private Labels labels;
+    private Endpoints endpoints;
+
+    public BasicApp(Settings settings, Labels labels, Endpoints endpoints) {
+        this.settings = settings;
+        this.labels = labels;
+        this.endpoints = endpoints;
+    }
+
+    public Settings getSettings() {
+        return settings;
+    }
+
+    public Labels getLabels() {
+        return labels;
+    }
+
+    public Endpoints getEndpoints() {
+        return endpoints;
+    }
 
     @Override
-    public void apply(MavenProject project, Settings settings, Labels labels) {
+    public void apply(MavenProject project) {
         // Required labels
         labels.add("app-name", settings.appName);
         labels.add("app-version", settings.appVersion);

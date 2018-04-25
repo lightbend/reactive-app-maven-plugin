@@ -27,7 +27,7 @@ public class BuildMojo extends AbstractMojo {
     @Component
     private BuildPluginManager pluginManager;
 
-    Plugin getThisPlugin() {
+    private Plugin getThisPlugin() {
         for(Plugin plugin : mavenProject.getBuildPlugins()) {
             if(plugin.getArtifactId().equals("reactive-app-maven-plugin")) {
                 return plugin;
@@ -43,6 +43,7 @@ public class BuildMojo extends AbstractMojo {
 
         Settings settings = new Settings(pluginConf);
         Labels labels = new Labels();
+        Endpoints endpoints = new Endpoints();
 
         AppType type = AppTypeDetector.detect(mavenProject);
         settings.appType = type;
@@ -55,16 +56,16 @@ public class BuildMojo extends AbstractMojo {
         ReactiveApp analyser = null;
         switch(type) {
             case Basic:
-                analyser = new BasicApp();
+                analyser = new BasicApp(settings, labels, endpoints);
                 break;
             case Akka:
-                analyser = new AkkaApp();
+                analyser = new AkkaApp(settings, labels, endpoints);
                 break;
             case Play:
-                analyser = new PlayApp();
+                analyser = new PlayApp(settings, labels, endpoints);
                 break;
             case Lagom:
-                analyser = new LagomApp();
+                analyser = new LagomApp(settings, labels, endpoints);
                 break;
             default:
                 log.error("Unknown app type " + type.toString());
@@ -73,7 +74,7 @@ public class BuildMojo extends AbstractMojo {
         if(analyser == null)
             throw new MojoExecutionException("Unknown app type");
 
-        analyser.apply(mavenProject, settings, labels);
+        analyser.apply(mavenProject);
 
         Xpp3Dom conf = configuration(
                         element("images",
@@ -97,6 +98,7 @@ public class BuildMojo extends AbstractMojo {
                         )
                 );
 
+        endpoints.writeToLabels(labels);
         labels.writeToConf(conf);
 
         executeMojo(
