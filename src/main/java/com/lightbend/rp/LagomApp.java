@@ -11,13 +11,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-
 public class LagomApp implements ReactiveApp {
     private BasicApp basic;
     private Pattern pathExtractor = Pattern.compile("^\\\\Q(/.*?)\\\\E.*");
 
-    public LagomApp(Settings settings, Labels labels, Endpoints endpoints) {
-        basic = new BasicApp(settings, labels, endpoints);
+    public LagomApp(Settings settings, Labels labels, Endpoints endpoints, Applications applications) {
+        basic = new BasicApp(settings, labels, endpoints, applications);
     }
 
     private String decodePathPattern(String pattern) {

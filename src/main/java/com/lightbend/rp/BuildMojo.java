@@ -44,6 +44,7 @@ public class BuildMojo extends AbstractMojo {
         Settings settings = new Settings(pluginConf);
         Labels labels = new Labels();
         Endpoints endpoints = new Endpoints();
+        Applications applications = new Applications();
 
         AppType type = AppTypeDetector.detect(mavenProject);
         settings.appType = type;
@@ -56,16 +57,16 @@ public class BuildMojo extends AbstractMojo {
         ReactiveApp analyser = null;
         switch(type) {
             case Basic:
-                analyser = new BasicApp(settings, labels, endpoints);
+                analyser = new BasicApp(settings, labels, endpoints, applications);
                 break;
             case Akka:
-                analyser = new AkkaApp(settings, labels, endpoints);
+                analyser = new AkkaApp(settings, labels, endpoints, applications);
                 break;
             case Play:
-                analyser = new PlayApp(settings, labels, endpoints);
+                analyser = new PlayApp(settings, labels, endpoints, applications);
                 break;
             case Lagom:
-                analyser = new LagomApp(settings, labels, endpoints);
+                analyser = new LagomApp(settings, labels, endpoints, applications);
                 break;
             default:
                 log.error("Unknown app type " + type.toString());
@@ -75,6 +76,13 @@ public class BuildMojo extends AbstractMojo {
             throw new MojoExecutionException("Unknown app type");
 
         analyser.apply(mavenProject);
+
+        // Add default application if analysers didn't create any
+        if(applications.applications.isEmpty()) {
+            Applications.Application a = applications.addApplication();
+            a.name = "default";
+            a.arguments.add("deployments/run-java.sh");
+        }
 
         Xpp3Dom conf = configuration(
                         element("images",
@@ -91,13 +99,13 @@ public class BuildMojo extends AbstractMojo {
                                                         element("AB_OFF", "1"),
                                                         element("JAVA_MAIN_CLASS", "${mainClass}"),
                                                         element("JAVA_APP_JAR", "${project.name}-${project.version}.jar")
-                                                ),
-                                                element("cmd", "deployments/run-java.sh")
+                                                )
                                         )
                                 )
                         )
                 );
 
+        applications.writeToLabels(labels);
         endpoints.writeToLabels(labels);
         labels.writeToConf(conf);
 

@@ -6,11 +6,13 @@ public class BasicApp implements ReactiveApp {
     private Settings settings;
     private Labels labels;
     private Endpoints endpoints;
+    private Applications applications;
 
-    public BasicApp(Settings settings, Labels labels, Endpoints endpoints) {
+    public BasicApp(Settings settings, Labels labels, Endpoints endpoints, Applications applications) {
         this.settings = settings;
         this.labels = labels;
         this.endpoints = endpoints;
+        this.applications = applications;
     }
 
     public Settings getSettings() {
@@ -23,6 +25,10 @@ public class BasicApp implements ReactiveApp {
 
     public Endpoints getEndpoints() {
         return endpoints;
+    }
+
+    public Applications getApplications() {
+        return applications;
     }
 
     @Override
