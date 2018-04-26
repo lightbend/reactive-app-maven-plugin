@@ -46,6 +46,8 @@ public class BuildMojo extends AbstractMojo {
         Endpoints endpoints = new Endpoints();
         Applications applications = new Applications();
 
+        labels.add("reactive-maven-app-version", getThisPlugin().getVersion());
+
         AppType type = AppTypeDetector.detect(mavenProject);
         settings.appType = type;
         log.info("App type: " + type.toString());
