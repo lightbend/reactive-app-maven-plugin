@@ -45,5 +45,17 @@ public class BasicApp implements ReactiveApp {
             labels.add("memory", settings.memory.toString());
         if(settings.diskSpace != null)
             labels.add("disk-space", settings.diskSpace.toString());
+
+        // HTTP ingress
+        if(!settings.httpIngressPaths.isEmpty() || !settings.httpIngressPorts.isEmpty()) {
+            Endpoints.Endpoint e = endpoints.addEndpoint();
+            e.name = "http";
+            e.protocol = "http";
+
+            Endpoints.Endpoint.Ingress i = e.addIngress();
+            i.type = "http";
+            i.paths = settings.httpIngressPaths;
+            i.ports = settings.httpIngressPorts;
+        }
     }
 }

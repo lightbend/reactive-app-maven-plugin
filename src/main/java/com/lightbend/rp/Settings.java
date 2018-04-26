@@ -2,6 +2,8 @@ package com.lightbend.rp;
 
 import org.codehaus.plexus.util.xml.Xpp3Dom;
 
+import java.util.ArrayList;
+
 public class Settings {
 
     public String appName;
@@ -10,6 +12,9 @@ public class Settings {
     public Long diskSpace;
     public Long memory;
     public Double cpu;
+
+    public ArrayList<String> httpIngressPorts = new ArrayList<>();
+    public ArrayList<String> httpIngressPaths = new ArrayList<>();
 
     // Makes string lowercase and capitalizes first letter for parsing app type
     private String capitalizeFirst(String str) {
@@ -35,6 +40,26 @@ public class Settings {
                         break;
                     case "cpu":
                         cpu = Double.parseDouble(child.getValue());
+                        break;
+                    case "httpIngressPorts":
+                        for(Xpp3Dom port : child.getChildren()) {
+                            if(port.getName().equals("port")) {
+                                httpIngressPorts.add(port.getValue());
+                            }
+                            else {
+                                throw new RuntimeException("Expected element named \"port\", found \"" + port.getName() + "\"");
+                            }
+                        }
+                        break;
+                    case "httpIngressPaths":
+                        for(Xpp3Dom path : child.getChildren()) {
+                            if(path.getName().equals("path")) {
+                                httpIngressPaths.add(path.getValue());
+                            }
+                            else {
+                                throw new RuntimeException("Expected element named \"path\", found \"" + path.getName() + "\"");
+                            }
+                        }
                         break;
                 }
             }

@@ -12,5 +12,8 @@ public class PlayApp implements ReactiveApp {
     @Override
     public void apply(MavenProject project) {
         basic.apply(project);
+
+        Labels labels = basic.getLabels();
+        labels.add("play-http-binding.enabled", "true");
     }
 }
