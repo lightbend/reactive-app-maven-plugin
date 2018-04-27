@@ -7,6 +7,10 @@ public class PlayApp implements ReactiveApp {
 
     public PlayApp(Settings settings, Labels labels, Endpoints endpoints, Applications applications) {
         basic = new BasicApp(settings, labels, endpoints, applications);
+
+        // Override some defaults
+        settings.enableCommon = true;
+        settings.enablePlayHttpBinding = true;
     }
 
     @Override
@@ -14,6 +18,5 @@ public class PlayApp implements ReactiveApp {
         basic.apply(project);
 
         Labels labels = basic.getLabels();
-        labels.add("play-http-binding.enabled", "true");
     }
 }

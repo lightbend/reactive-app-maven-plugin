@@ -17,6 +17,11 @@ public class LagomApp implements ReactiveApp {
 
     public LagomApp(Settings settings, Labels labels, Endpoints endpoints, Applications applications) {
         basic = new BasicApp(settings, labels, endpoints, applications);
+
+        // Override some defaults
+        settings.enableCommon = true;
+        settings.enableAkkaClusterBootstrap = true;
+        settings.enableServiceDiscovery = true;
     }
 
     private String decodePathPattern(String pattern) {

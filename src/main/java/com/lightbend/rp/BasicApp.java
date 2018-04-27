@@ -57,5 +57,9 @@ public class BasicApp implements ReactiveApp {
             i.paths = settings.httpIngressPaths;
             i.ports = settings.httpIngressPorts;
         }
+
+        // Additional modules
+        if(settings.enablePlayHttpBinding)
+            labels.add("play-http-binding.enabled", "true");
     }
 }

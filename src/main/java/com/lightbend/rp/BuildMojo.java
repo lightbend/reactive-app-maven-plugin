@@ -1,15 +1,12 @@
 package com.lightbend.rp;
 
-import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.*;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.BuildPluginManager;
-import org.apache.maven.project.DependencyResolutionException;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
 
@@ -41,7 +38,7 @@ public class BuildMojo extends AbstractMojo {
 
         Xpp3Dom pluginConf = (Xpp3Dom)getThisPlugin().getConfiguration();
 
-        Settings settings = new Settings(pluginConf);
+        Settings settings = new Settings();
         Labels labels = new Labels();
         Endpoints endpoints = new Endpoints();
         Applications applications = new Applications();
@@ -77,6 +74,7 @@ public class BuildMojo extends AbstractMojo {
         if(analyser == null)
             throw new MojoExecutionException("Unknown app type");
 
+        settings.read(pluginConf);
         analyser.apply(mavenProject);
 
         // Add default application if analysers didn't create any
