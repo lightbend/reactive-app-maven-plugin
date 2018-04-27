@@ -84,6 +84,11 @@ public class BuildMojo extends AbstractMojo {
             a.arguments.add("deployments/run-java.sh");
         }
 
+        if(settings.mainClass == null || settings.mainClass.isEmpty()) {
+            throw new MojoExecutionException("main class was not defined; " +
+                    "do that by adding <mainClass>com.app.Main</mainClass> to plugin configuration");
+        }
+
         Xpp3Dom conf = configuration(
                         element("images",
                                 element("image",
@@ -97,7 +102,7 @@ public class BuildMojo extends AbstractMojo {
                                                         ),
                                                 element("env",
                                                         element("AB_OFF", "1"),
-                                                        element("JAVA_MAIN_CLASS", "${mainClass}"),
+                                                        element("JAVA_MAIN_CLASS", settings.mainClass),
                                                         element("JAVA_APP_JAR", "${project.name}-${project.version}.jar")
                                                 )
                                         )

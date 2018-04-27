@@ -11,6 +11,7 @@ public class PlayApp implements ReactiveApp {
         // Override some defaults
         settings.enableCommon = true;
         settings.enablePlayHttpBinding = true;
+        settings.mainClass = "play.core.server.ProdServerStart";
     }
 
     @Override

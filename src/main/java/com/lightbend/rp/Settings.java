@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class Settings {
 
+    public String mainClass;
     public String appName;
     public String appVersion;
     public AppType appType;
@@ -35,6 +36,9 @@ public class Settings {
         if(config != null) {
             for (Xpp3Dom child : config.getChildren()) {
                 switch (child.getName()) {
+                    case "mainClass":
+                        mainClass = child.getValue();
+                        break;
                     case "appName":
                         appName = child.getValue();
                         break;

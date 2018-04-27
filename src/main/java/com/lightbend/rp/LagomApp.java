@@ -22,6 +22,7 @@ public class LagomApp implements ReactiveApp {
         settings.enableCommon = true;
         settings.enableAkkaClusterBootstrap = true;
         settings.enableServiceDiscovery = true;
+        settings.mainClass = "play.core.server.ProdServerStart";
     }
 
     private String decodePathPattern(String pattern) {
