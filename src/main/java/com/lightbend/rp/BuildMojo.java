@@ -51,7 +51,7 @@ public class BuildMojo extends AbstractMojo {
         AppType type = AppTypeDetector.detect(mavenProject);
         settings.appType = type;
         log.info("App type: " + type.toString());
-        settings.appName = mavenProject.getName();
+        settings.appName = mavenProject.getArtifactId();
         log.info("App name: " + settings.appName);
         settings.appVersion = mavenProject.getVersion();
         log.info("App version: " + settings.appVersion);

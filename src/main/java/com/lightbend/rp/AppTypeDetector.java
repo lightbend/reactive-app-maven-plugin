@@ -11,7 +11,7 @@ public class AppTypeDetector {
 
         for(Dependency dep : project.getDependencies()) {
             String artifactId = dep.getArtifactId();
-            if(artifactId.startsWith("akka-actor"))
+            if(artifactId.startsWith("akka-actor") || artifactId.startsWith("akka-cluster"))
                 hasAkka = true;
             if(artifactId.startsWith("play"))
                 hasPlay = true;
