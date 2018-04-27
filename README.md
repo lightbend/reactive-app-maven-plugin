@@ -6,7 +6,7 @@ This plugin builds Docker images that can be used with CLI tool, [reactive-cli](
 
 ## Installation
 
-For now, plugin is development and not yet available in public Maven repositories. To use it in your projects, clone this repo and install it locally:
+For now, plugin is still missing some functionality and not yet available in public Maven repositories. To use it in your projects, clone this repo and install it locally:
 
 ```
 git clone git@github.com:lightbend/reactive-app-maven-plugin.git
@@ -39,9 +39,9 @@ Add build plugin dependency in your pom.xml:
 
 ### Configuration
 
-If your project isn't built using Lagom or Play, for orchestration to know what to run, you need to specify main class of your project with <mainClass> element in the configuration.
+If your project isn't built using Lagom or Play, for orchestration to know what to run, you need to specify main class of your project with `<mainClass>` element in the configuration.
 
-Additionally, you can specify http ingress paths and ports like this:
+Additionally, you can specify HTTP ingress paths and ports like this:
 
 ```
 <httpIngressPorts>
