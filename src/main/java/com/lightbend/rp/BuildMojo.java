@@ -42,6 +42,7 @@ public class BuildMojo extends AbstractMojo {
         Labels labels = new Labels();
         Endpoints endpoints = new Endpoints();
         Applications applications = new Applications();
+        ReactiveLibChecker checker = new ReactiveLibChecker(mavenProject, settings, log);
 
         labels.add("reactive-maven-app-version", getThisPlugin().getVersion());
 
@@ -88,6 +89,9 @@ public class BuildMojo extends AbstractMojo {
             throw new MojoExecutionException("main class was not defined; " +
                     "do that by adding <mainClass>com.app.Main</mainClass> to plugin configuration");
         }
+
+        // TODO: check reactive-lib deps here
+        checker.check();
 
         Xpp3Dom conf = configuration(
                         element("images",
