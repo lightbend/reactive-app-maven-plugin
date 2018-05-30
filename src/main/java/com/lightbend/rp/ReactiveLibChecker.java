@@ -22,7 +22,7 @@ public class ReactiveLibChecker {
 
     public boolean require(String lib, String version) {
         boolean found = false;
-        Version foundVersion = Version.valueOf("0");
+        Version foundVersion = Version.valueOf("0.0.0");
         for(Dependency dep : project.getDependencies()) {
             if(dep.getArtifactId().equals(lib)) {
                 found = true;
@@ -33,9 +33,7 @@ public class ReactiveLibChecker {
 
         if(!found) {
             log.error("Lightbend Orchestration required dependency not found: " + lib);
-        }
-
-        if(version != null && version.length() > 0) {
+        } else if(version != null && version.length() > 0) {
             Version required = Version.valueOf(version);
             if(foundVersion.compareTo(required) < 0) {
                 log.error("Lightbend Orchestration dependency " + lib + " version too old: "
