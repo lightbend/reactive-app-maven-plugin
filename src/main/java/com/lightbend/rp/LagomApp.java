@@ -66,6 +66,9 @@ public class LagomApp implements ReactiveApp {
     public void apply(MavenProject project) {
         basic.apply(project);
 
+        // TODO(mitkus): this is hardcoded, fix to point to real config if it isn't rp-application.conf
+        basic.getLabels().add("config-resource", "rp-application.conf");
+
         try {
             List<String> l = project.getCompileClasspathElements();
             Stream<URL> u = l.stream().map(i -> {

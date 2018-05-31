@@ -104,7 +104,6 @@
         <scala.binary.version>2.12</scala.binary.version>
     </properties>
 
-
     <repositories>
       <repository>
         <id>akka-dns</id>

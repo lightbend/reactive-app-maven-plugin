@@ -59,7 +59,15 @@ public class BasicApp implements ReactiveApp {
         }
 
         // Additional modules
+        if(settings.enableCommon)
+            labels.add("modules.common.enabled", "true");
         if(settings.enablePlayHttpBinding)
-            labels.add("play-http-binding.enabled", "true");
+            labels.add("modules.play-http-binding.enabled", "true");
+        if(settings.enableServiceDiscovery)
+            labels.add("modules.service-discovery.enabled", "true");
+        if(settings.enableAkkaClusterBootstrap) {
+            labels.add("modules.akka-cluster-bootstrap.enabled", "true");
+            labels.add("modules.akka-management.enabled", "true");
+        }
     }
 }
