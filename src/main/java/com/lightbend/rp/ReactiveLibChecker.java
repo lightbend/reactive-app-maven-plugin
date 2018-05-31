@@ -32,6 +32,7 @@ public class ReactiveLibChecker {
                 }
             }
         }
+        return false;
     }
 
     // Enforcing check
