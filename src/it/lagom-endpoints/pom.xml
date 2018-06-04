@@ -89,12 +89,6 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
-            <!-- Service Locator Provider -->
-            <dependency>
-                <groupId>${serviceLocator.provider.groupName}</groupId>
-                <artifactId>${serviceLocator.provider.artifactName}</artifactId>
-                <version>${serviceLocator.provider.artifactVersion}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -123,28 +117,5 @@
       </repository>
     </repositories>
 
-    <profiles>
-        <profile>
-            <id>kubernetes</id>
-            <properties>
-                <buildTarget>kubernetes</buildTarget>
-                <serviceLocator.provider.groupName>com.lightbend</serviceLocator.provider.groupName>
-                <serviceLocator.provider.artifactName>lagom14-java-service-locator-dns_${scala.binary.version}</serviceLocator.provider.artifactName>
-                <serviceLocator.provider.artifactVersion>2.2.3</serviceLocator.provider.artifactVersion>
-            </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <build>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources</directory>
-                    </resource>
-                    <resource>
-                        <directory>src/main/kubernetes-resources</directory>
-                    </resource>
-                </resources>
-            </build></profile>
-    </profiles>
 </project>
 

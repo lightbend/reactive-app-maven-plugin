@@ -38,8 +38,14 @@
         </dependency>
         <!-- Service Locator Provider -->
         <dependency>
-            <groupId>${serviceLocator.provider.groupName}</groupId>
-            <artifactId>${serviceLocator.provider.artifactName}</artifactId>
+            <groupId>com.lightbend.rp</groupId>
+            <artifactId>reactive-lib-service-discovery-lagom14-java_${scala.binary.version}</artifactId>
+            <version>0.8.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lightbend.rp</groupId>
+            <artifactId>reactive-lib-akka-cluster-bootstrap_${scala.binary.version}</artifactId>
+            <version>0.8.1</version>
         </dependency>
     </dependencies>
 
