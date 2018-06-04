@@ -24,7 +24,7 @@ public class ReactiveLibChecker {
     boolean find(String lib, String version) {
         Version foundVersion = Version.valueOf("0.0.0");
         for (Dependency dep : project.getDependencies()) {
-            if (dep.getArtifactId().equals(lib)) {
+            if (dep.getArtifactId().startsWith(lib)) {
                 foundVersion = Version.valueOf(dep.getVersion());
                 if(version != null && version.length() > 0) {
                     Version required = Version.valueOf(version);
@@ -40,7 +40,7 @@ public class ReactiveLibChecker {
         boolean found = false;
         Version foundVersion = Version.valueOf("0.0.0");
         for (Dependency dep : project.getDependencies()) {
-            if (dep.getArtifactId().equals(lib)) {
+            if (dep.getArtifactId().startsWith(lib)) {
                 found = true;
                 foundVersion = Version.valueOf(dep.getVersion());
                 break;

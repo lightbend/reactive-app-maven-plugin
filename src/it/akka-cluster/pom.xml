@@ -57,9 +57,7 @@
                 <artifactId>reactive-app-maven-plugin</artifactId>
                 <version>0.2.0-SNAPSHOT</version>
                 <configuration>
-                    <mainClass>${properties.mainClass}</mainClass>
-                    <enableCommon>true</enableCommon>
-                    <enableAkkaClusterBootstrap>true</enableAkkaClusterBootstrap>
+                    <mainClass>${mainClass}</mainClass>
                 </configuration>
                 <executions>
                     <execution>
