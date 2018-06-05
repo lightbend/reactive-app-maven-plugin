@@ -6,13 +6,15 @@ This plugin builds Docker images that can be used with CLI tool, [reactive-cli](
 
 ## Installation
 
-For now, plugin is still missing some functionality and not yet available in public Maven repositories. To use it in your projects, clone this repo and install it locally:
+If you want to check out source code and build a local snapshot build, you can do it like this:
 
 ```
 git clone git@github.com:lightbend/reactive-app-maven-plugin.git
 cd reactive-app-maven-plugin
 mvn install
 ```
+
+Otherwise, plugin should be available from public maven repositories.
 
 ## Project setup
 
@@ -22,7 +24,7 @@ Add build plugin dependency in your pom.xml:
 <plugin>
     <groupId>com.lightbend.rp</groupId>
     <artifactId>reactive-app-maven-plugin</artifactId>
-    <version>0.2.0-SNAPSHOT</version>
+    <version>0.3.0</version>
     <configuration>
         <mainClass>com.lightbend.rp.test.akkacluster.SimpleClusterApp</mainClass>
     </configuration>
@@ -52,22 +54,35 @@ Additionally, you can specify HTTP ingress paths and ports like this:
 </httpIngressPaths>
 ```
 
+We also support limiting cpu, disk and memory usage like this:
+
+```
+<cpu>0.5</cpu>
+<memory>512Mi</memory>
+<disk>1Gi</disk>
+```
+
+
 ### reactive-lib dependencies
 
-This step eventually will be automatic, but for now, to use service discovery and cluster bootstrap features of Lightbend Orchestration you need to manually add reactive-lib libraries to your project dependencies:
+To run your application in Lightbend Orchestration environment, helper libraries must be added as dependencies. They do service discovery and cluster bootstrapping, two
+important steps in starting up your application successfully. You can add these libraries in your pom.xml dependency section:
 
 ```
 <dependency>
     <groupId>com.lightbend.rp</groupId>
     <artifactId>reactive-lib-service-discovery-lagom14-java_2.12</artifactId>
-    <version>0.7.0</version>
+    <version>0.8.1</version>
 </dependency>
 <dependency>
     <groupId>com.lightbend.rp</groupId>
     <artifactId>reactive-lib-akka-cluster-bootstrap_2.12</artifactId>
-    <version>0.7.0</version>
+    <version>0.8.1</version>
 </dependency>
 ```
+
+Plugin will do its best to complain if you should depend on something and forgot to add it. Rule of thumb is: if you use Akka Cluster features, you
+need `reactive-lib-akka-cluster-bootstrap`; if you use Lagom, you also need `reactive-lib-service-discovery`.
 
 ## Building a docker image
 
