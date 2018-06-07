@@ -8,6 +8,34 @@
   <packaging>maven-plugin</packaging>
 
   <name>reactive-app-maven-plugin</name>
+  <description>Helper plugin for building applications to run using Lightbend Orchestration</description>
+  <url>https://github.com/lightbend/reactive-app-maven-plugin</url>
+
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <url>https://github.com/lightbend/reactive-app-maven-plugin</url>
+  </scm>
+
+  <organization>
+    <name>Lightbend Inc.</name>
+    <url>http://www.lightbend.com</url>
+  </organization>
+
+  <developers>
+    <developer>
+      <id>lightbend</id>
+      <name>Lightbend Developers</name>
+      <email>info@lightbend.com</email>
+      <url>http://www.example.com/jdoe</url>
+    </developer>
+  </developers>
 
   <properties>
     <version.maven>3.3.1</version.maven>
@@ -17,6 +45,17 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
 
   <dependencies>
     <dependency>
@@ -68,6 +107,31 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.8</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.5</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
