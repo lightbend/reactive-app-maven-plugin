@@ -4,7 +4,7 @@
 
   <groupId>com.lightbend.rp</groupId>
   <artifactId>reactive-app-maven-plugin</artifactId>
-  <version>0.3.0</version>
+  <version>0.3.1-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
 
   <name>reactive-app-maven-plugin</name>
