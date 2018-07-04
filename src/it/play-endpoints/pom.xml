@@ -55,6 +55,12 @@
             <artifactId>play-akka-http-server_2.12</artifactId>
             <version>${play2.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.lightbend.rp</groupId>
+            <artifactId>reactive-lib-play-http-binding_2.12</artifactId>
+            <version>0.8.2</version>
+        </dependency>
     </dependencies>
 
     <build>
