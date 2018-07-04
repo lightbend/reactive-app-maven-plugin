@@ -101,4 +101,4 @@ rp generate-kubernetes-resources "akka-quickstart:1.0" \
   --pod-controller-replicas 2
 ```
 
-To read more about `rp` go here: [https://developer.lightbend.com/docs/lightbend-orchestration-kubernetes/latest/kubernetes-deployment.html](https://developer.lightbend.com/docs/lightbend-orchestration-kubernetes/latest/kubernetes-deployment.html)
+To read more about `rp` go here: <https://developer.lightbend.com/docs/lightbend-orchestration/current/kubernetes-deployment.html>
