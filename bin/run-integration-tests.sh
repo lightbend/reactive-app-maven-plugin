@@ -16,9 +16,11 @@ it_test() {
   (
     cd "$dir" || die "Failed to cd into $dir"
 
+    local -r g='com.lightbend.rp'
+    local -r a='reactive-app-maven-plugin'
     find . -name 'pom.xml' -exec \
       xmlstarlet ed -S --inplace -N pom=http://maven.apache.org/POM/4.0.0 \
-      --update "/pom:project/pom:build/pom:plugins/pom:plugin[.//pom:artifactId='reactive-app-maven-plugin']/pom:version" \
+      --update "/pom:project/pom:build/pom:plugins/pom:plugin[.//pom:groupId='$g' and .//pom:artifactId='$a']/pom:version" \
       -v "$project_version" {} +
 
     mvn clean install
