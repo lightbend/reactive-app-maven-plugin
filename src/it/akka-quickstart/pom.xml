@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <!-- #build-sample -->
 <project>
     <modelVersion>4.0.0</modelVersion>
@@ -51,7 +52,7 @@
                     <executable>java</executable>
                     <arguments>
                         <argument>-classpath</argument>
-                        <classpath />
+                        <classpath/>
                         <argument>${mainClass}</argument>
                     </arguments>
                 </configuration>
