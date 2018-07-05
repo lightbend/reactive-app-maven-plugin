@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <!-- #build-sample -->
 <project>
     <modelVersion>4.0.0</modelVersion>
@@ -51,7 +52,7 @@
                     <executable>java</executable>
                     <arguments>
                         <argument>-classpath</argument>
-                        <classpath />
+                        <classpath/>
                         <argument>${mainClass}</argument>
                     </arguments>
                 </configuration>
@@ -78,7 +79,7 @@
             <plugin>
                 <groupId>com.lightbend.rp</groupId>
                 <artifactId>reactive-app-maven-plugin</artifactId>
-                <version>0.2.0-SNAPSHOT</version>
+                <version>0.3.1-SNAPSHOT</version>
                 <configuration>
                     <mainClass>${mainClass}</mainClass>
                 </configuration>
