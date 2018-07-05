@@ -31,7 +31,8 @@ it_test() {
 
 # prerequisite: minikube start & eval $(minikube docker-env)
 # prerequisite: brew install xmlstarlet
-project_version=$(xmlstarlet sel -N pom=http://maven.apache.org/POM/4.0.0 -t -m "/pom:project/pom:version" -v '.' pom.xml) || true
+# TODO: Handle potential xmlstarlet failure
+project_version=$(xmlstarlet sel -N pom=http://maven.apache.org/POM/4.0.0 -t -m "/pom:project/pom:version" -v '.' pom.xml)
 mvn install
 it_test src/it/hello           hello:1.0-SNAPSHOT
 it_test src/it/akka-quickstart akka-quickstart:1.0
