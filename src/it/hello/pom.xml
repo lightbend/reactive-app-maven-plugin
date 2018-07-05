@@ -10,6 +10,7 @@
 
     <properties>
         <mainClass>com.lightbend.app.App</mainClass>
+        <java.version>1.8</java.version>
     </properties>
 
     <dependencies>
@@ -22,6 +23,18 @@
     </dependencies>
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.2</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
                 <!-- Build an executable JAR -->
