@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.lightbend.rp.test.playendpoints</groupId>
     <artifactId>play-endpoints</artifactId>
-    <version>1.0.0</version>
+    <version>1.0</version>
     <packaging>play2</packaging>
 
     <name>play-endpoints</name>
