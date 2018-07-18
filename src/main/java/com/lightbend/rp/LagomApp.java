@@ -4,6 +4,7 @@ import org.apache.maven.project.MavenProject;
 import org.json.*;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.List;
@@ -87,8 +88,13 @@ public class LagomApp implements ReactiveApp {
 
             String servicesJson = (String)services.invoke(sdObj, ld);
             parseServices(servicesJson);
-        } catch(Exception e) {
-            throw new RuntimeException(e.toString());
+        } catch (final InvocationTargetException e) {
+            throwUnchecked(e.getCause());
+        } catch (final Exception e) {
+            throwUnchecked(e);
         }
     }
+
+    @SuppressWarnings("unchecked")
+    private <T extends Throwable> void throwUnchecked(final Throwable e) throws T { throw (T) e; }
 }
