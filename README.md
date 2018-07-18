@@ -82,7 +82,8 @@ important steps in starting up your application successfully. You can add these 
 ```
 
 Plugin will do its best to complain if you should depend on something and forgot to add it. Rule of thumb is: if you use Akka Cluster features, you
-need `reactive-lib-akka-cluster-bootstrap`; if you use Lagom, you also need `reactive-lib-service-discovery`.
+need `reactive-lib-akka-cluster-bootstrap`; if you use Lagom, you also need `reactive-lib-service-discovery` and
+`api-tools`.
 
 ## Building a docker image
 
