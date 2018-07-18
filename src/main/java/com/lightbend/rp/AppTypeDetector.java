@@ -15,7 +15,7 @@ public class AppTypeDetector {
                 hasAkka = true;
             if(artifactId.startsWith("play"))
                 hasPlay = true;
-            if(artifactId.startsWith("lagom-javadsl") || artifactId.startsWith("lagom-scaladsl"))
+            if(artifactId.startsWith("lagom-javadsl-server") || artifactId.startsWith("lagom-scaladsl-server"))
                 hasLagom = true;
         }
 
