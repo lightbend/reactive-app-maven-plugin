@@ -60,6 +60,26 @@ public class ReactiveLibChecker {
         return found;
     }
 
+    public void preApplyCheck() throws MojoExecutionException {
+        boolean success = true;
+
+        switch(settings.appType) {
+            case Basic:
+                break;
+            case Akka:
+                break;
+            case Play:
+                break;
+            case Lagom:
+                success = success && require("api-tools", reactiveLibVersion);
+                break;
+        }
+
+        if (!success) {
+            throw new MojoExecutionException("Library dependency requirements not met.");
+        }
+    }
+
     public void check() throws MojoExecutionException {
         boolean success = true;
         if (settings.enableCommon) {
