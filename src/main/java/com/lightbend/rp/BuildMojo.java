@@ -76,6 +76,9 @@ public class BuildMojo extends AbstractMojo {
             throw new MojoExecutionException("Unknown app type");
 
         settings.read(pluginConf);
+
+        checker.preApplyCheck();
+
         analyser.apply(mavenProject);
 
         // Add default application if analysers didn't create any
@@ -90,7 +93,6 @@ public class BuildMojo extends AbstractMojo {
                     "do that by adding <mainClass>com.app.Main</mainClass> to plugin configuration");
         }
 
-        // TODO: check reactive-lib deps here
         checker.check();
 
         Xpp3Dom conf = configuration(
