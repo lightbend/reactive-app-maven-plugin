@@ -1,5 +1,6 @@
 package com.lightbend.rp;
 
+import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.project.MavenProject;
 import org.json.*;
 
@@ -88,13 +89,12 @@ public class LagomApp implements ReactiveApp {
 
             String servicesJson = (String)services.invoke(sdObj, ld);
             parseServices(servicesJson);
-        } catch (final InvocationTargetException e) {
-            throwUnchecked(e.getCause());
-        } catch (final Exception e) {
-            throwUnchecked(e);
+        } catch (final DependencyResolutionRequiredException
+            | ClassNotFoundException | NoSuchFieldException | NoSuchMethodException
+            | IllegalAccessException | InvocationTargetException
+            e) {
+            final Throwable t = Throwables2.unwrap(e);
+            throw new RuntimeException("Failed to detect the Lagom services and add ingress endpoints", t);
         }
     }
-
-    @SuppressWarnings("unchecked")
-    private <T extends Throwable> void throwUnchecked(final Throwable e) throws T { throw (T) e; }
 }
