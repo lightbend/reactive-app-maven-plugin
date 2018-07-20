@@ -104,6 +104,7 @@ public class ReactiveLibChecker {
             boolean foundScala = find(scalaLibName, reactiveLibVersion);
             if(!foundJava && !foundScala) {
                 log.error("Lightbend Orchestration required dependency not found: " + javaLibName + " or " + scalaLibName);
+                success = false;
             }
         }
 
