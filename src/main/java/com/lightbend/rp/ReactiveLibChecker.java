@@ -12,7 +12,7 @@ public class ReactiveLibChecker {
     Settings settings;
     Log log;
 
-    final String reactiveLibVersion = "0.8.1";
+    final String reactiveLibVersion = "0.9.0";
 
     public ReactiveLibChecker(MavenProject project, Settings settings, Log log) {
         this.project = project;
@@ -83,7 +83,7 @@ public class ReactiveLibChecker {
     public void check() throws MojoExecutionException {
         boolean success = true;
         if (settings.enableCommon) {
-            // Common lib is dependency of other, no need to check explicitly
+            // Common lib is dependency of other reactive-libs, no need to check explicitly
             //success = success && require("reactive-lib-common", reactiveLibVersion);
         }
 
