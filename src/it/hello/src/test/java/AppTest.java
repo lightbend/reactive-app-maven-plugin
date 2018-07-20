@@ -1,22 +1,11 @@
 package com.lightbend.app;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
-public class AppTest
-    extends TestCase
-{
-    public AppTest( String testName )
-    {
-        super( testName );
-    }
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
-    }
-    public void testApp()
-    {
-        assertTrue( true );
+public class AppTest {
+    @Test
+    public void testApp() {
+        assertEquals("Hello, world!", App.greeting);
     }
 }
