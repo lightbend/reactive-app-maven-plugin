@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -o pipefail
+set -e
 
 die() { echo "Aborting: $*"; exit 1; }
 
@@ -21,6 +22,16 @@ it_test() {
     echo "Generating K8s resources for $docker_image and applying with kubectl"
     rp generate-kubernetes-resources --generate-all --registry-use-local "$docker_image" | kubectl apply --validate --dry-run -f - \
       || die "Failed to generate & apply k8s resources for $docker_image"
+
+    if [ -f "check.sh" ]; then
+      echo "Running check.sh script"
+      ./check.sh
+      if [[ $? -eq 0 ]]; then
+        echo "Dockerfile check successful"
+      else
+        die "Dockerfile check failed"
+      fi
+    fi
   )
 }
 
