@@ -5,3 +5,7 @@ jdk: oraclejdk8
 # Default "install" with GPG signing disabled
 install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip=true -B -V
 # TODO: Add caching of $HOME/.m2/repository without compromising the integrity of CI
+
+notifications:
+  email:
+    on_success: never
