@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 set -o pipefail
-set -e
 
 die() { echo "Aborting: $*"; exit 1; }
 
