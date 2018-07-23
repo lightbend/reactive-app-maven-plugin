@@ -17,6 +17,7 @@ public class Settings {
     public boolean enableCommon = true;
     public boolean enablePlayHttpBinding = false;
     public boolean enableAkkaClusterBootstrap = false;
+    public boolean enableStatus = false;
     public boolean enableServiceDiscovery = false;
 
     public String akkaClusterBootstrapEndpointName = "akka-remote";
@@ -82,6 +83,9 @@ public class Settings {
                         break;
                     case "enableAkkaClusterBootstrap":
                         enableAkkaClusterBootstrap = Boolean.parseBoolean(child.getValue());
+                        break;
+                    case "enableStatus":
+                        enableStatus = Boolean.parseBoolean(child.getValue());
                         break;
                     case "enableServiceDiscovery":
                         enableServiceDiscovery = Boolean.parseBoolean(child.getValue());
