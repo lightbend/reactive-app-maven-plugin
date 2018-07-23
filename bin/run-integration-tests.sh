@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 set -o pipefail
-set -e
 
 die() { echo "Aborting: $*"; exit 1; }
 
@@ -25,8 +24,7 @@ it_test() {
 
     if [ -f "check.sh" ]; then
       echo "Running check.sh script"
-      ./check.sh
-      if [[ $? -eq 0 ]]; then
+      if ./check.sh; then
         echo "Dockerfile check successful"
       else
         die "Dockerfile check failed"
