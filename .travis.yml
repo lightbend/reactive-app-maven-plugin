@@ -9,8 +9,11 @@ jdk: oraclejdk8
 env:
 - CHANGE_MINIKUBE_NONE_USER=true # This moves Kubernetes specific config files.
 
+install:
+# Required by bin/run-integration-tests.sh
+- apt-get install xmlstarlet
 # Default "install" with GPG signing disabled
-install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip=true -B -V
+- mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip=true -B -V
 
 before_script:
 # Make root mounted as rshared to fix kube-dns issues.
