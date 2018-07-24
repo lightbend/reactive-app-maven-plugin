@@ -11,7 +11,7 @@ env:
 
 install:
 # Required by bin/run-integration-tests.sh
-- apt-get install xmlstarlet
+- sudo apt-get install xmlstarlet
 # Default "install" with GPG signing disabled
 - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip=true -B -V
 
