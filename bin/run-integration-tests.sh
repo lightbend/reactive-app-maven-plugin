@@ -9,6 +9,16 @@ mvn() {
   command mvn "$@" || die "Failed to run 'mvn $*' in ${PWD##*/}"
 }
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+
+# WORKAROUND to:
+#     /usr/bin/rp: line 23: /usr/share/reactive-cli/bin/rp: No such file or directory
+if [ "$TRAVIS" = true ]; then
+  RP="$DIR/rp-from-source.sh"
+else
+  RP=rp
+fi
+
 it_test() {
   dir="$1"
   docker_image="$2"
@@ -18,13 +28,20 @@ it_test() {
 
     mvn -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip=true clean install
 
-    # TODO: Remove this WORKAROUND to
-    #     /usr/bin/rp: line 23: /usr/share/reactive-cli/bin/rp: No such file or directory
-    [ "$TRAVIS" = true ] && return
-
     echo "Generating K8s resources for $docker_image and applying with kubectl"
-    rp generate-kubernetes-resources --generate-all --registry-use-local "$docker_image" | kubectl apply --validate --dry-run -f - \
-      || die "Failed to generate & apply k8s resources for $docker_image"
+    "$RP" generate-kubernetes-resources --generate-all --registry-use-local "$docker_image" > x.yaml \
+      || die "Failed to generate k8s resources for $docker_image"
+
+    # TODO: Remove this WORKAROUND to
+    #     error converting YAML to JSON: yaml: line 103: mapping values are not allowed in this context
+    #     error converting YAML to JSON: yaml: control characters are not allowed
+    if [ "$TRAVIS" = true ]; then
+      cat x.yaml
+      return
+    fi
+
+    kubectl apply --validate --dry-run -f x.yaml \
+      || die "Failed to apply k8s resources for $docker_image"
 
     if [ -f "check.sh" ]; then
       echo "Running check.sh script"
