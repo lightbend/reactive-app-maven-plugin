@@ -42,6 +42,14 @@ script:
 - bin/run-integration-tests.sh
 
 # TODO: Add caching of $HOME/.m2/repository without compromising the integrity of CI
+cache:
+  directories:
+    - $HOME/.ivy2/cache
+    - $HOME/.sbt
+
+before_cache:
+  - find $HOME/.ivy2/cache -name "ivydata-*.properties" -delete
+  - find $HOME/.sbt        -name "*.lock"               -delete
 
 notifications:
   email:
