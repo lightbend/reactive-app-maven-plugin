@@ -1,4 +1,4 @@
-~*
 .*
+/bin/reactive-cli/
 target/
-.idea
+~*
