@@ -33,14 +33,6 @@ it_test() {
     "$RP" generate-kubernetes-resources --generate-all --registry-use-local "$docker_image" > "$file" \
       || die "Failed to generate k8s resources for $docker_image"
 
-    # TODO: Remove this WORKAROUND to
-    #     error converting YAML to JSON: yaml: line 103: mapping values are not allowed in this context
-    #     error converting YAML to JSON: yaml: control characters are not allowed
-    if [ "$TRAVIS" = true ]; then
-      cat "$file"
-      return
-    fi
-
     kubectl apply --validate --dry-run -f "$file" \
       || die "Failed to apply k8s resources for $docker_image"
 
