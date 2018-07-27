@@ -67,7 +67,17 @@
                 <groupId>com.lightbend.rp</groupId>
                 <artifactId>reactive-app-maven-plugin</artifactId>
                 <version>0.3.1-SNAPSHOT</version>
+                <configuration>
+                    <enableStatus>true</enableStatus>
+                </configuration>
                 <executions>
+                    <execution>
+                        <id>merge-config</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>merge-config</goal>
+                        </goals>
+                    </execution>
                     <execution>
                         <id>build-docker</id>
                         <phase>install</phase>

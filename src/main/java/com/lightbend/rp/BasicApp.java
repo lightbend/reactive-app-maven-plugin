@@ -67,7 +67,11 @@ public class BasicApp implements ReactiveApp {
             labels.add("modules.service-discovery.enabled", "true");
         if(settings.enableAkkaClusterBootstrap) {
             labels.add("modules.akka-cluster-bootstrap.enabled", "true");
+            labels.add("modules.status.enabled", "true");
             labels.add("modules.akka-management.enabled", "true");
+        }
+        if(settings.enableStatus) {
+            labels.add("modules.status.enabled", "true");
         }
     }
 }
