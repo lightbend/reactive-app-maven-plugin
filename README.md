@@ -1,6 +1,6 @@
 # reactive-app-maven-plugin
 
-This project is a component of [Lightbend Orchestration](https://developer.lightbend.com/docs/lightbend-orchestration-kubernetes/latest/). Refer to its documentation for usage, examples, and reference information.
+This project is a component of [Lightbend Orchestration](https://developer.lightbend.com/docs/lightbend-orchestration/current/). Refer to its documentation for usage, examples, and reference information.
 
 This plugin builds Docker images that can be used with CLI tool, [reactive-cli](https://github.com/lightbend/reactive-cli), to automatically create resources for deployment on Kubernetes and DC/OS.
 
