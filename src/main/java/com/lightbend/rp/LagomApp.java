@@ -24,6 +24,7 @@ public class LagomApp implements ReactiveApp {
         settings.enableCommon = true;
         settings.enableAkkaClusterBootstrap = true;
         settings.enableServiceDiscovery = true;
+        settings.enablePlayHttpBinding = true;
         settings.mainClass = "play.core.server.ProdServerStart";
     }
 
