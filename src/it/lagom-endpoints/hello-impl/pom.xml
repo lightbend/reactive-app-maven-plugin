@@ -27,6 +27,10 @@
         </dependency>
         <dependency>
             <groupId>com.lightbend.lagom</groupId>
+            <artifactId>lagom-logback_${scala.binary.version}</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lightbend.lagom</groupId>
             <artifactId>api-tools_${scala.binary.version}</artifactId>
             <version>${lagom.version}</version>
         </dependency>
@@ -43,6 +47,11 @@
         <dependency>
             <groupId>com.lightbend.rp</groupId>
             <artifactId>reactive-lib-akka-cluster-bootstrap_${scala.binary.version}</artifactId>
+            <version>0.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lightbend.rp</groupId>
+            <artifactId>reactive-lib-play-http-binding_${scala.binary.version}</artifactId>
             <version>0.9.0</version>
         </dependency>
 
