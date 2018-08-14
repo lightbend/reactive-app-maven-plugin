@@ -69,6 +69,8 @@ public class BasicApp implements ReactiveApp {
             labels.add("modules.akka-cluster-bootstrap.enabled", "true");
             labels.add("modules.status.enabled", "true");
             labels.add("modules.akka-management.enabled", "true");
+            endpoints.addEndpoint(settings.akkaClusterBootstrapEndpointName, "tcp");
+            endpoints.addEndpoint(settings.akkaManagementEndpointName, "tcp");
         }
         if(settings.enableStatus) {
             labels.add("modules.status.enabled", "true");
