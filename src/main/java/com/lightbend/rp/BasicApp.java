@@ -49,10 +49,9 @@ public class BasicApp implements ReactiveApp {
         // HTTP ingress
         if(!settings.httpIngressPaths.isEmpty() || !settings.httpIngressPorts.isEmpty()) {
             Endpoints.Endpoint e = endpoints.addEndpoint("http", "http");
-            Endpoints.Endpoint.Ingress i = e.addIngress();
-            i.type = "http";
-            i.paths = settings.httpIngressPaths;
-            i.ports = settings.httpIngressPorts;
+            Endpoints.Endpoint.Ingress i = e.addIngress("http");
+            i.paths.addAll(settings.httpIngressPaths);
+            i.ports.addAll(settings.httpIngressPorts);
         }
 
         // Additional modules

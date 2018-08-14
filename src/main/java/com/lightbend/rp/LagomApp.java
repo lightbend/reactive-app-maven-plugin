@@ -49,8 +49,7 @@ public class LagomApp implements ReactiveApp {
                 // TODO(mitkus): this handles GET method, what happens with POST/PUT?
                 JSONObject acl = acls.getJSONObject(j);
 
-                Endpoints.Endpoint.Ingress ing = e.addIngress();
-                ing.type = "http";
+                Endpoints.Endpoint.Ingress ing = e.addIngress("http");
 
                 // TODO(mitkus): sbt-reactive-app always puts ports 80, 443; is that correct?
                 ing.ports.add("80");
