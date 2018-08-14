@@ -115,6 +115,13 @@
                 </configuration>
                 <executions>
                     <execution>
+                        <id>merge-config</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>merge-config</goal>
+                        </goals>
+                    </execution>
+                    <execution>
                         <goals>
                             <goal>build</goal>
                         </goals>
