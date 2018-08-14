@@ -53,8 +53,7 @@ public class MergeConfigMojo extends AbstractMojo {
         Xpp3Dom pluginConf = (Xpp3Dom)getThisPlugin().getConfiguration();
         Settings settings = new Settings();
         settings.read(pluginConf);
-        if(settings.enableAkkaClusterBootstrap
-            || settings.enableStatus) {
+        if(settings.enableCommon) {
             log.info("Executing merge-config");
             try {
                 mergeConfigFiles(log);
