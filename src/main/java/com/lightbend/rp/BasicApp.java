@@ -48,14 +48,10 @@ public class BasicApp implements ReactiveApp {
 
         // HTTP ingress
         if(!settings.httpIngressPaths.isEmpty() || !settings.httpIngressPorts.isEmpty()) {
-            Endpoints.Endpoint e = endpoints.addEndpoint();
-            e.name = "http";
-            e.protocol = "http";
-
-            Endpoints.Endpoint.Ingress i = e.addIngress();
-            i.type = "http";
-            i.paths = settings.httpIngressPaths;
-            i.ports = settings.httpIngressPorts;
+            Endpoints.Endpoint e = endpoints.addEndpoint("http", "http");
+            Endpoints.Endpoint.Ingress i = e.addIngress("http");
+            i.paths.addAll(settings.httpIngressPaths);
+            i.ports.addAll(settings.httpIngressPorts);
         }
 
         // Additional modules
@@ -69,6 +65,8 @@ public class BasicApp implements ReactiveApp {
             labels.add("modules.akka-cluster-bootstrap.enabled", "true");
             labels.add("modules.status.enabled", "true");
             labels.add("modules.akka-management.enabled", "true");
+            endpoints.addEndpoint(settings.akkaClusterBootstrapEndpointName, "tcp");
+            endpoints.addEndpoint(settings.akkaManagementEndpointName, "tcp");
         }
         if(settings.enableStatus) {
             labels.add("modules.status.enabled", "true");

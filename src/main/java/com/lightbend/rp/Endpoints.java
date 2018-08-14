@@ -5,9 +5,13 @@ import java.util.ArrayList;
 public class Endpoints {
     class Endpoint {
         class Ingress {
-            String type;
-            ArrayList<String> ports = new ArrayList<>();
-            ArrayList<String> paths = new ArrayList<>();
+            final String type;
+            final ArrayList<String> ports = new ArrayList<>();
+            final ArrayList<String> paths = new ArrayList<>();
+
+            public Ingress(final String type) {
+                this.type = type;
+            }
 
             private void writeToLabels(String prefix, Labels labels) {
                 labels.add(prefix + "type", type);
@@ -20,12 +24,17 @@ public class Endpoints {
             }
         }
 
-        String name;
-        String protocol;
-        ArrayList<Ingress> ingresses = new ArrayList<>();
+        final String name;
+        final String protocol;
+        final ArrayList<Ingress> ingresses = new ArrayList<>();
 
-        public Ingress addIngress() {
-            Ingress n = new Ingress();
+        Endpoint(final String name, final String protocol) {
+            this.name = name;
+            this.protocol = protocol;
+        }
+
+        public Ingress addIngress(final String type) {
+            Ingress n = new Ingress(type);
             ingresses.add(n);
             return n;
         }
@@ -41,10 +50,10 @@ public class Endpoints {
 
     private ArrayList<Endpoint> endpoints = new ArrayList<>();
 
-    public Endpoint addEndpoint() {
-        Endpoint n = new Endpoint();
-        endpoints.add(n);
-        return n;
+    public Endpoint addEndpoint(final String name, final String protocol) {
+        final Endpoint e = new Endpoint(name, protocol);
+        endpoints.add(e);
+        return e;
     }
 
     public void writeToLabels(Labels labels) {
