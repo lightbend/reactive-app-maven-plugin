@@ -42,9 +42,7 @@ public class LagomApp implements ReactiveApp {
         for(int i = 0; i < obj.length(); ++i) {
             JSONObject o = obj.getJSONObject(i);
 
-            Endpoints.Endpoint e = endpoints.addEndpoint();
-            e.name = o.getString("name");
-            e.protocol = "http";
+            Endpoints.Endpoint e = endpoints.addEndpoint(o.getString("name"), "http");
 
             JSONArray acls = o.getJSONArray("acls");
             for(int j = 0; j < acls.length(); ++j) {

@@ -20,9 +20,14 @@ public class Endpoints {
             }
         }
 
-        String name;
-        String protocol;
-        ArrayList<Ingress> ingresses = new ArrayList<>();
+        final String name;
+        final String protocol;
+        final ArrayList<Ingress> ingresses = new ArrayList<>();
+
+        Endpoint(final String name, final String protocol) {
+            this.name = name;
+            this.protocol = protocol;
+        }
 
         public Ingress addIngress() {
             Ingress n = new Ingress();
@@ -41,16 +46,10 @@ public class Endpoints {
 
     private ArrayList<Endpoint> endpoints = new ArrayList<>();
 
-    public Endpoint addEndpoint() {
-        Endpoint n = new Endpoint();
-        endpoints.add(n);
-        return n;
-    }
-
-    public void addEndpoint(final String name, final String protocol) {
-        final Endpoint e = addEndpoint();
-        e.name = name;
-        e.protocol = protocol;
+    public Endpoint addEndpoint(final String name, final String protocol) {
+        final Endpoint e = new Endpoint(name, protocol);
+        endpoints.add(e);
+        return e;
     }
 
     public void writeToLabels(Labels labels) {
