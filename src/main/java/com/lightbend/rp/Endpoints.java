@@ -56,6 +56,12 @@ public class Endpoints {
         return e;
     }
 
+    public Endpoint addEndpoint(final int idx, final String name, final String protocol) {
+        final Endpoint e = new Endpoint(name, protocol);
+        endpoints.add(idx, e);
+        return e;
+    }
+
     public void writeToLabels(Labels labels) {
         for (int i = 0; i < endpoints.size(); ++i) {
             endpoints.get(i).writeToLabels("endpoints." + Integer.toString(i) + ".", labels);
