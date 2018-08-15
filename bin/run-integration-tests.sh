@@ -62,7 +62,7 @@ it_test() {
       kubectl apply --validate -f "$file" \
         || die "Failed to apply k8s resources for $docker_image"
 
-      while ! (kubectl get pods --no-headers | grep "\bRunning\b"); do
+      while ! (kubectl get pods --no-headers | grep "\b[1-9]/[1-9]\b" | grep "\bRunning\b" | grep "" ); do
         echo "[info] waiting..."
         sleep 1
       done
@@ -93,8 +93,8 @@ it_test() {
 # prerequisite: minikube start & eval $(minikube docker-env)
 mvn -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip=true install
 bin/sync-integration-tests-plugin-version.sh || die "Failed to sync integration tests plugin version"
-# it_test src/it/hello           hello:1.0
+# it_test src/it/hello           hello:1.0            || die "it_test fail"
 it_test src/it/akka-quickstart akka-quickstart:1.0  || die "it_test fail"
 it_test src/it/play-endpoints  play-endpoints:1.0   || die "it_test fail"
-it_test src/it/lagom-endpoints hello-impl:1.0       || die "it_test fail"
+# it_test src/it/lagom-endpoints hello-impl:1.0       || die "it_test fail"
 it_test src/it/akka-cluster    akka-cluster:1.0     || die "it_test fail"
